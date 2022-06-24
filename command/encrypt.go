@@ -1,13 +1,32 @@
 package command
 
+import (
+	"crypto/tls"
+
+	"github.com/go-ldap/ldap/v3"
+)
+
 type Encrypt struct {
 	Command
-	Recipient string `short:"r" long:"recipient" description:"The recipient of the CMS encoded secret message." required:"yes"`
+	Recipients []string `short:"r" long:"recipient" description:"The recipient of the CMS encoded secret message." required:"yes"`
+	Address    URL      `short:"l" long:"ldap-address" description:"The address of the LDAP sever." required:"yes"`
+	Insecure   bool     `short:"i" long:"insecure-skip-verify" description:"Whether to skip TLS certificate verification." optional:"yes"`
 }
 
 func (cmd *Encrypt) Execute(args []string) error {
 	logger := cmd.InitLogger(true)
-	logger.Debugf("retrieving certificate for user %s", cmd.Recipient)
+	client, err := ldap.DialURL("ldap://ldap.example.com:389", ldap.DialWithTLSConfig(&tls.Config{
+		InsecureSkipVerify: true,
+	}))
+	if err != nil {
+		logger.Errorf("error dialling LDAP server: %v", err)
+		return err
+	}
+	defer client.Close()
+	for _, recipient := range cmd.Recipients {
+		logger.Debugf("retrieving certificate for user %s", recipient)
+
+	}
 	return nil
 }
 
