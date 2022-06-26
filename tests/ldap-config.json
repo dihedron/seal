@@ -1,0 +1,7 @@
+{
+    "endpoint": "ldap://ldap.example.com:389",
+    "username":"cn=read-only-admin,dc=example,dc=com", 
+    "password": "P4$$w0rd!",
+    "basedn": "dc=example,dc=com",
+    "insecure": true
+}
