@@ -1,6 +1,5 @@
 package command
 
-/*
 import (
 	"encoding/json"
 
@@ -28,4 +27,3 @@ func ToYAML(value interface{}) string {
 	result, _ := yaml.Marshal(value)
 	return string(result)
 }
-*/

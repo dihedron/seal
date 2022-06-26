@@ -16,7 +16,7 @@ type Encrypt struct {
 func (cmd *Encrypt) Execute(args []string) error {
 	logger := cmd.InitLogger(true)
 
-	logger.Debugf("LDAP connection info: %v", cmd.LDAP)
+	logger.Debugf("LDAP connection info: %v", ToJSON(cmd.LDAP, true))
 
 	options := []ldap.DialOpt{}
 	logger.Infof("connecting to LDAP server %s", cmd.LDAP.Endpoint.String())
